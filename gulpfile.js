@@ -21,11 +21,10 @@ var paths = {
 var app = require('./app/index.js');
 gulp.task('app', function(){
 	var fs = require('fs');
-	var path = require('path');
-	path.exists('build', function(exists){
+	fs.exists('build', function(exists){
 		if(!exists){fs.mkdirSync('build', 0777);}
 	})
-	path.exists('build/image', function(exists){
+	fs.exists('build/image', function(exists){
 		if(!exists){fs.mkdirSync('build/image', 0777);}
 	})
 	var source = fs.readFileSync('html/header.html', 'utf-8');
