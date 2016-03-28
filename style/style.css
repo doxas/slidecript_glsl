@@ -285,3 +285,20 @@ label:hover {
     transition: width 0.5s ease;
 }
 
+#ansButton {
+    background-color: gainsboro;
+    border: 5px solid gray;
+    border-radius: 50px;
+    color: deeppink;
+    font-style: normal;
+    font-weight: bold;
+    margin: 20px 100px;
+    padding: 0px 15px;
+    display: inline-block;
+    text-shadow: 0px 0px 1px crimson;
+    box-shadow: 10px 10px 10px gainsboro;
+    cursor: pointer;
+}
+
+
+

@@ -3,6 +3,7 @@
     var pages = [];
     var pagesCount = 0;
     var activePage = 0;
+    var question = 10;
 
     window.onload = function(){
         var a, e;
@@ -21,11 +22,12 @@
         pageChange(true, 0);
         e = document.getElementById('total');
         e.innerText = pagesCount;
+        e = document.getElementById('ansButton');
+        e.addEventListener('click', function(){answer();}, true);
 
         // input label setting
-        var elmList = 20;
         var questionCount = 4;
-        for(var i = 0; i < elmList; i++){
+        for(var i = 0; i < question; i++){
             var j = paddingZero(i + 1);
             for(var k = 0; k < questionCount; k++){
                 var l = paddingZero(k + 1);
@@ -83,22 +85,24 @@
     function answer(){
         var e;
         var ans = [
-            3, 3, 4, 4, 1,
-            4, 3, 1, 2, 1
+            1, 1, 1, 1, 1,
+            1, 1, 1, 1, 1
         ];
-        var elmList = 10;
         var ansCount = 0;
-        for(var i = 0; i < elmList; i++){
+        for(var i = 0; i < question; i++){
             var j = paddingZero(i + 1);
             var k = paddingZero(ans[i]);
             e = document.getElementById('radio' + j + '_' + k);
-            if(e.checked){ansCount++;}
+            if(e.checked){
+                ansCount++;
+                console.log('question ' + (i + 1) + ' => ○');
+            }else{
+                console.log('question ' + (i + 1) + ' => ×');
+            }
         }
-        e = document.getElementById('ansCount');
-        e.textContent = ansCount;
         switch(true){
             case ansCount <= 2:
-                alert('かなり頑張って復習しないとヤバいかも！！');
+                alert('かなり頑張って復習しないとヤバいかも！？');
                 break;
             case ansCount <= 4:
                 alert('若干あいまいな部分が多いのかも……復習しておきましょう！');
@@ -106,13 +110,14 @@
             case ansCount <= 6:
                 alert('まずまず理解できているみたい。ポイントを絞って再復習！');
                 break;
-            case ansCount <= 8:
+            case ansCount < 10:
                 alert('かなり高い理解度です！　不安なところは復習しておきましょう！');
                 break;
             default :
                 alert('perfect !!!');
                 break;
         }
+        console.log(ansCount + ' / ' + question);
     }
 
     function paddingZero(num){
