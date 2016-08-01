@@ -23,6 +23,7 @@
         e = document.getElementById('total');
         e.innerText = pagesCount;
         e = document.getElementById('ansButton');
+        if(!e){return;}
         e.addEventListener('click', function(){answer();}, true);
 
         // input label setting
@@ -35,7 +36,7 @@
                 if(e){e.addEventListener('change', function(eve){eve.currentTarget.blur();}, true);}
             }
         }
-    }
+    };
 
     function keyDown(eve){
         switch(eve.keyCode){
