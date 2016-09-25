@@ -10,7 +10,11 @@ module.exports = {
             md = md.replace(/\*\*/, '</strong>');
         }
         source = md.match(/\*[^\*]+\*/g);
-        source = md.split('\n');
+        if(md.match(/\r\n/)){
+            source = md.split(/\r\n/);
+        }else{
+            source = md.split(/\n/);
+        }
         if(source.length === 0){return null;}
         dest = [];
         for(i = 0, j = source.length; i < j; i++){
