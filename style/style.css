@@ -152,6 +152,23 @@ pre code {
     margin: 200px 20px 50px;
 }
 
+pre.glsl, pre.json {
+    background-color: silver;
+    border: 1px solid gray;
+    color: #666;
+    font-family: monospace;
+    background: #f9f9f9;
+    border: 1px solid silver;
+    color: #666;
+    font-size: small;
+    font-family: consolas, Ricty, Monaco, monospace;
+    line-height: 1;
+    margin: 10px;
+    padding: 5px;
+    overflow: auto;
+}
+
+
 input[type="radio"] {
     opacity: 0;
 }
@@ -195,6 +212,8 @@ label:hover {
     top: 0px;
     overflow: hidden;
     z-index: 2;
+    /* - temp - */
+    display: none;
 }
 
 #header:before {
@@ -258,6 +277,8 @@ label:hover {
     width: 100px;
     display: inline-block;
     cursor: pointer;
+    /* - temp - */
+    display: none;
 }
 
 #navi {
@@ -268,6 +289,8 @@ label:hover {
 
 #count, #separator, #total {
     display: inline-block;
+    /* - temp - */
+    display: none;
 }
 
 #bar {

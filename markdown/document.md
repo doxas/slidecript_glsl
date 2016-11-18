@@ -9,6 +9,28 @@ paragraparagraparagraparagra**iparag**rapppppparagraph
 
 ---
 
+#### 000
+
+@@@
+{
+    title: "test title",
+    author: "doxas",
+    description: "description text"
+}
+@@@
+
+|||
+#version 300 es
+
+in vec3 position;
+
+void main(){
+    gl_Position = vec4(position, 1.0);
+}
+|||
+
+---
+
 paragraph`code`paragraph
 
 paragraph

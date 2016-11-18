@@ -2,7 +2,7 @@
 module.exports = {
     parse: function(md){
         var i, j, k, l;
-        var tag, content, source, dest, page;
+        var tag, content, source, dest, page, demo, attribute;
         if(md == null || typeof md !== 'string'){return null;}
         source = md.replace(/\t/g, '');
         while(md.match(/\*\*[^\*]+\*\*/)){
@@ -24,6 +24,18 @@ module.exports = {
             }
             if(page){
                 switch(true){
+                    // glsl block
+                    case (source[i].match(/^\|\|\| *$/) != null):
+                        page = false;
+                        dest[i - 1] = dest[i - 1].substr(0, dest[i - 1].length - 1);
+                        dest[i] = '</pre>\n';
+                        break;
+                    // json block
+                    case (source[i].match(/^@@@ *$/) != null):
+                        page = false;
+                        dest[i - 1] = dest[i - 1].substr(0, dest[i - 1].length - 1);
+                        dest[i] = '</pre>\n';
+                        break;
                     // code block
                     case (source[i].match(/^``` *$/) != null):
                         page = false;
@@ -41,11 +53,27 @@ module.exports = {
                         k = source[i].match(/^#{1,6} /);
                         tag = 'h' + (k[0].length - k[0].replace(/#/g, '').length);
                         content = source[i].replace(/^#{1,6} /, '');
-                        dest[i] = '\t<' + tag + '>' + content + '</' + tag + '>\n';
+                        attribute = '';
+                        if(source[i].match(/^#{1,6} \d{1,3}/)){
+                            l = source[i].match(/\d+/)[0];
+                            demo = parseInt(l, 10);
+                            attribute = ' id="demo_' + demo + '"';
+                        }
+                        dest[i] = '\t<' + tag + attribute + '>' + content + '</' + tag + '>\n';
                         break;
                     // separator
                     case (source[i].match(/^--- *$/) != null):
                         dest[i] = '</div>\n<div class="page">\n';
+                        break;
+                    // glsl block
+                    case (source[i].match(/^\|\|\| *$/) != null):
+                        page = true;
+                        dest[i] = '\t<pre class="glsl" id="glsl_' + demo + '">';
+                        break;
+                    // json block
+                    case (source[i].match(/^@@@ *$/) != null):
+                        page = true;
+                        dest[i] = '\t<pre class="json" id="json_' + demo + '">';
                         break;
                     // code block
                     case (source[i].match(/^``` *$/) != null):
