@@ -1,10 +1,10 @@
 {
-  "name": "slidecript",
+  "name": "slidecript_glsl",
   "version": "0.0.1",
-  "description": "presentation script",
+  "description": "presentation text and glsl shader",
   "repository": {
     "type": "git",
-    "url": "https://github.com/doxas/slidecript.git"
+    "url": "https://github.com/doxas/slidecript_glsl.git"
   },
   "main": "build/index.html",
   "dependencies": {},
