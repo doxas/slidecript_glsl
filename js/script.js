@@ -90,7 +90,7 @@
         if(e.length > 0 && f.length > 0){
             g = parseInt(pages[activePage].children[0].id.match(/\d+/)[0], 10);
             if(!isNaN(g)){
-                console.log(g, e[0].textContent);
+                console.log(g, JSON.parse(e[0].textContent));
                 console.log(g, f[0].textContent);
             }
         }

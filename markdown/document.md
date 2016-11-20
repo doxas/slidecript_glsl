@@ -13,9 +13,9 @@ paragraparagraparagraparagra**iparag**rapppppparagraph
 
 @@@
 {
-    title: "test title",
-    author: "doxas",
-    description: "description text"
+    "title": "test title",
+    "author": "doxas",
+    "description": "description text"
 }
 @@@
 
