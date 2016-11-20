@@ -165,6 +165,7 @@
         }
         if(!gl){
             gl = canvas.getContext('webgl');
+            gl.getExtension('OES_standard_derivatives');
             tPrg = gl.createProgram();
             vSource = bid('vs').textContent;
             fSource = bid('fs').textContent;
@@ -195,7 +196,7 @@
         prg = gl.createProgram();
         vSource = 'attribute vec3 p;void main(){gl_Position=vec4(p,1.);}';
         fSource = shaderSource;
-        if(!shader(prg, 0, vSource) && !shader(prg, 1, fSource)){
+        if(shader(prg, 0, vSource) && shader(prg, 1, fSource)){
             gl.linkProgram(prg);
         }else{
             return;
@@ -263,10 +264,12 @@
         gl.compileShader(k);
         if(!gl.getShaderParameter(k, gl.COMPILE_STATUS)){
             alert(gl.getShaderInfoLog(k));
-            return;
+            return false;
         }
         gl.attachShader(p, k);
-        return gl.getShaderInfoLog(k);
+        var message = gl.getShaderInfoLog(k);
+        if(message !== ''){console.info('message: ' + message);}
+        return true;
     }
 
     function resetBuffer(obj){

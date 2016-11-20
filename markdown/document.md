@@ -48,6 +48,73 @@ void main(){
 
 ---
 
+#### 001
+
+@@@
+{
+    "title": "test title",
+    "author": "doxas",
+    "description": "description text"
+}
+@@@
+
+---
+
+|||
+// writen by qmuntada Based on this shader : https://www.shadertoy.com/view/ltXSDN
+// modified a lor by gigatron for glslsandbox !
+// 
+#ifdef GL_ES
+precision mediump float;
+#endif
+
+#extension GL_OES_standard_derivatives : enable
+
+uniform float time;
+uniform vec2 mouse;
+uniform vec2 resolution;
+uniform sampler2D backbuffer;
+
+#define	SPEED 	    0.1
+#define	STAR_NUMBER 100
+
+vec3 col1 = vec3(155., 176., 255.) / 256.; 
+vec3 col2 = vec3(255., 111., 111.) / 256.; 
+
+float rand(float i){
+    return fract(sin(dot(vec2(i) ,vec2(32.9898,78.233))) * 43758.5453);
+}
+
+void main(){
+    vec4 b=texture2D(backbuffer,gl_FragCoord.xy/resolution.xy);
+
+    vec2 uv = gl_FragCoord.xy / resolution.y;
+    float res  = resolution.x / resolution.y;
+    gl_FragColor = vec4(0.0);
+
+    vec4 sStar = vec4(rand(uv.x + uv.y));
+    sStar *= pow(rand(uv.x * uv.y), 800.);
+    gl_FragColor += sStar;
+  
+    vec4 col = vec4(0.);
+
+    for (int i = 0; i < STAR_NUMBER; ++i){
+    	float n = float(i);
+
+        vec3 pos = vec3(rand(n) + res + time * SPEED, rand(n + 1.) , rand(n + 2.));
+
+        pos.x = mod(pos.x * pos.z, res);
+        vec4 col = .2*vec4(pow(length(pos.xy - uv), -2.0) * 0.005 * pos.z * rand(n + 3.));
+
+        col.xyz *= mix(col1, col2, rand(n + 4.));
+            
+       gl_FragColor += vec4(col);
+    }
+}
+|||
+
+---
+
 paragraph`code`paragraph
 
 paragraph
