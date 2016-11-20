@@ -19,9 +19,14 @@ presentation text and glsl shader
 
 ```
 {
-    title: {string},
-    author: {string},
-    description: {string}
+    "title": {string},
+    "author": {string},
+    "description": {string}
 }
 ```
+
+### glsl
+
+fragment shader only
+
 
