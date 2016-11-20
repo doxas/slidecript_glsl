@@ -19,6 +19,8 @@ paragraparagraparagraparagra**iparag**rapppppparagraph
 }
 @@@
 
+---
+
 |||
 precision mediump float;
 uniform vec2  resolution;     // resolution (width, height)

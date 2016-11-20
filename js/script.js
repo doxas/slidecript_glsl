@@ -7,25 +7,27 @@
     var pagesCount = 0;
     var activePage = 0;
     var question = 10;
+    var barElement = null;
     var shaderSource = '';
 
     window.onload = function(){
         var a, e;
-        a = document.getElementById('content').childNodes;
+        a = bid('content').childNodes;
         for(var i = 0, len = a.length; i < len; i++){
             if(a[i].nodeType === 1){pages.push(a[i]);}
         }
         pagesCount = pages.length;
+        barElement = bid('bar');
         window.addEventListener('keydown', keyDown, false);
         window.addEventListener('mousemove', mouseMove, false);
-        e = document.getElementById('prev');
+        e = bid('prev');
         e.addEventListener('click', function(){pageChange(true);}, false);
-        e = document.getElementById('next');
+        e = bid('next');
         e.addEventListener('click', function(){pageChange(false);}, false);
         pageChange(true, 0);
-        e = document.getElementById('total');
+        e = bid('total');
         e.innerText = pagesCount;
-        e = document.getElementById('ansButton');
+        e = bid('ansButton');
         if(!e){return;}
         e.addEventListener('click', function(){answer();}, false);
 
@@ -35,7 +37,7 @@
             var j = paddingZero(i + 1);
             for(var k = 0; k < questionCount; k++){
                 var l = paddingZero(k + 1);
-                e = document.getElementById('radio' + j + '_' + l);
+                e = bid('radio' + j + '_' + l);
                 if(e){e.addEventListener('change', function(eve){eve.currentTarget.blur();}, true);}
             }
         }
@@ -80,19 +82,24 @@
             }
         }
         pages[activePage].className = 'active';
-        e = document.getElementById('progress');
+        barElement.className = '';
+        e = bid('progress');
         e.style.width = parseInt((activePage + 1) / pagesCount * 100) + '%';
-        e = document.getElementById('count');
+        e = bid('count');
         e.textContent = activePage + 1;
 
         e = pages[activePage].getElementsByClassName('json');
-        f = pages[activePage].getElementsByClassName('glsl');
-        if(e.length > 0 && f.length > 0){
+        if(e.length > 0){
             g = parseInt(pages[activePage].children[0].id.match(/\d+/)[0], 10);
             if(!isNaN(g)){
                 console.log(g, JSON.parse(e[0].textContent));
-                console.log(g, f[0].textContent);
             }
+        }
+
+        f = pages[activePage].getElementsByClassName('glsl');
+        if(f.length > 0){
+            barElement.className = 'hidden';
+            console.log(g, f[0].textContent);
         }
     }
 
@@ -107,7 +114,7 @@
         for(var i = 0; i < question; i++){
             var j = paddingZero(i + 1);
             var k = paddingZero(ans[i]);
-            e = document.getElementById('radio' + j + '_' + k);
+            e = bid('radio' + j + '_' + k);
             if(e.checked){
                 ansCount++;
                 console.log('question ' + (i + 1) + ' => ○');
