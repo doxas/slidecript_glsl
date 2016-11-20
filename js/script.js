@@ -8,6 +8,7 @@
     var activePage = 0;
     var question = 10;
     var barElement = null;
+    var timeout = null;
     var shaderSource = '';
 
     window.onload = function(){
@@ -96,10 +97,18 @@
             }
         }
 
+        if(timeout != null){
+            clearTimeout(timeout);
+            timeout = null;
+            shaderSource = '';
+        }
+
         f = pages[activePage].getElementsByClassName('glsl');
         if(f.length > 0){
             barElement.className = 'hidden';
+            shaderSource = f[0].textContent;
             console.log(g, f[0].textContent);
+            timeout = setTimeout(init, 500);
         }
     }
 
@@ -145,7 +154,11 @@
     function init(){
         var err = null;
         run = false;
-        if(shaderSource != null || shaderSource === ''){console.log('shader source not found');}
+        timeout = null;
+        if(shaderSource == null || shaderSource === ''){
+            console.log('shader source not found');
+            return;
+        }
         if(!canvas){
             canvas = bid('canvas');
             canvas.width = window.innerWidth;
@@ -162,22 +175,24 @@
             tUni.texture = gl.getUniformLocation(tPrg, 'texture');
             bAttLocation = gl.getAttribLocation(tPrg, 'position');
             fFront = fBack = fTemp = null;
-            fBufferWidth = window.innerWidth;
-            fBufferHeight = window.innerHeight;
-            fFront = create_framebuffer(fBufferWidth, fBufferHeight);
-            fBack  = create_framebuffer(fBufferWidth, fBufferHeight);
-            gl.viewport(0, 0, window.innerWidth, window.innerHeight);
-            gl.clearColor(0, 0, 0, 1);
+            fBufferWidth = 2048;
+            fBufferHeight = 2048;
             gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
             gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,1,0,-1,-1,0,1,1,0,1,-1,0]), gl.STATIC_DRAW);
             gl.activeTexture(gl.TEXTURE0);
             gl.disable(gl.DEPTH_TEST);
             gl.disable(gl.CULL_FACE);
             gl.disable(gl.BLEND);
+            gl.clearColor(0, 0, 0, 1);
         }else{
             gl.deleteProgram(prg);
             prg = null;
         }
+        resetBuffer(fFront);
+        resetBuffer(fBack);
+        resetBuffer(fTemp);
+        fFront = create_framebuffer(fBufferWidth, fBufferHeight);
+        fBack  = create_framebuffer(fBufferWidth, fBufferHeight);
         prg = gl.createProgram();
         vSource = 'attribute vec3 p;void main(){gl_Position=vec4(p,1.);}';
         fSource = shaderSource;
@@ -212,9 +227,10 @@
         gl.enableVertexAttribArray(aAttLocation);
         gl.vertexAttribPointer(aAttLocation, 3, gl.FLOAT, false, 0, 0);
         gl.clear(gl.COLOR_BUFFER_BIT);
+        gl.viewport(0, 0, fBufferWidth, fBufferHeight);
         gl.uniform2fv(uni.mouse, mousePosition);
         gl.uniform1f(uni.time, nowTime);
-        gl.uniform2fv(uni.resolution, [window.innerWidth, window.innerHeight]);
+        gl.uniform2fv(uni.resolution, [fBufferWidth, fBufferHeight]);
         gl.uniform1i(uni.sampler, 0);
         gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
 
@@ -224,6 +240,7 @@
         gl.enableVertexAttribArray(bAttLocation);
         gl.vertexAttribPointer(bAttLocation, 3, gl.FLOAT, false, 0, 0);
         gl.clear(gl.COLOR_BUFFER_BIT);
+        gl.viewport(0, 0, window.innerWidth, window.innerHeight);
         gl.uniform1i(tUni.texture, 0);
         gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
 
@@ -245,6 +262,26 @@
         }
         gl.attachShader(p, k);
         return gl.getShaderInfoLog(k);
+    }
+
+    function resetBuffer(obj){
+        if(!gl || !obj){return;}
+        if(obj.hasOwnProperty('f') && obj.f != null && gl.isFramebuffer(obj.f)){
+            gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+            gl.deleteFramebuffer(obj.f);
+            obj.f = null;
+        }
+        if(obj.hasOwnProperty('d') && obj.d != null && gl.isRenderbuffer(obj.d)){
+            gl.bindRenderbuffer(gl.RENDERBUFFER, null);
+            gl.deleteRenderbuffer(obj.d);
+            obj.d = null;
+        }
+        if(obj.hasOwnProperty('t') && obj.t != null && gl.isTexture(obj.t)){
+            gl.bindTexture(gl.TEXTURE_2D, null);
+            gl.deleteTexture(obj.t);
+            obj.t = null;
+        }
+        obj = null;
     }
 
     function create_framebuffer(width, height){
