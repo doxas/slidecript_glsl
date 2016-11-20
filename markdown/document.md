@@ -20,12 +20,38 @@ paragraparagraparagraparagra**iparag**rapppppparagraph
 @@@
 
 |||
-#version 300 es
+precision mediump float;
+uniform vec2  resolution;     // resolution (width, height)
+uniform vec2  mouse;          // mouse      (0.0 ~ 1.0)
+uniform float time;           // time       (1second == 1.0)
+uniform sampler2D buckbuffer; // previous scene texture
 
-in vec3 position;
+vec3 hsv(float h, float s, float v){
+    vec4 t = vec4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);
+    vec3 p = abs(fract(vec3(h) + t.xyz) * 6.0 - vec3(t.w));
+    return v * mix(vec3(t.x), clamp(p - vec3(t.x), 0.0, 1.0), s);
+}
 
 void main(){
-    gl_Position = vec4(position, 1.0);
+    vec2 p = (gl_FragCoord.xy * 2.0 - resolution) / min(resolution.x, resolution.y);
+    vec2 x = vec2(-0.345, 0.654);
+    vec2 y = vec2(time * 0.005, 0.0);
+    vec2 z = p;
+    int j = 0;
+    for(int i = 0; i < 360; i++){
+        j++;
+        if(length(z) > 2.0){break;}
+        z = vec2(z.x * z.x - z.y * z.y, 2.0 * z.x * z.y) + x + y;
+    }
+    float h = abs(mod(time * 15.0 - float(j), 360.0) / 360.0);
+    float f = 0.1 / length(p - (mouse * 2.0 - 1.0));
+    vec4 smpColor = texture2D(buckbuffer, gl_FragCoord.xy / min(resolution.x, resolution.y));
+    if(length(smpColor) > 0.0){
+        vec3 tmp = mix(hsv(h, 1.0, 1.0) + f, smpColor.rgb, 0.975);
+        gl_FragColor = vec4(tmp, 1.0);
+    }else{
+        gl_FragColor = vec4(hsv(h, 1.0, 1.0) + f, 1.0);
+    }
 }
 |||
 
