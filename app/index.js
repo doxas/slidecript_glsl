@@ -57,7 +57,7 @@ module.exports = {
                         if(source[i].match(/^#{1,6} \d{1,3}/)){
                             l = source[i].match(/\d+/)[0];
                             demo = parseInt(l, 10);
-                            attribute = ' id="demo_' + demo + '"';
+                            attribute = ' class="displaynone" id="demo_' + demo + '"';
                         }
                         dest[i] = '\t<' + tag + attribute + '>' + content + '</' + tag + '>\n';
                         break;
@@ -68,12 +68,12 @@ module.exports = {
                     // glsl block
                     case (source[i].match(/^\|\|\| *$/) != null):
                         page = true;
-                        dest[i] = '\t<pre class="glsl" id="glsl_' + demo + '">';
+                        dest[i] = '\t<pre class="glsl displaynone" id="glsl_' + demo + '">';
                         break;
                     // json block
                     case (source[i].match(/^@@@ *$/) != null):
                         page = true;
-                        dest[i] = '\t<pre class="json" id="json_' + demo + '">';
+                        dest[i] = '\t<pre class="json displaynone" id="json_' + demo + '">';
                         break;
                     // code block
                     case (source[i].match(/^``` *$/) != null):
