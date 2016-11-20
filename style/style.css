@@ -6,6 +6,7 @@
 }
 
 html, body {
+    background-color: white;
     color: #333;
     font-family: Meiryo, sans-serif;
     font-size: 32px;
@@ -204,6 +205,13 @@ label:hover {
     position: absolute;
     top: 0px;
     left: 0px;
+    opacity: 1.0;
+    transition: opacity 0.5s cubic-bezier(0.55, 0.085, 0.68, 0.53);
+}
+
+#canvas.hidden {
+    opacity: 0.0;
+    transition: opacity 0.5s cubic-bezier(0.55, 0.085, 0.68, 0.53);
 }
 
 #wrap {
@@ -235,6 +243,7 @@ label:hover {
     position: absolute;
     top: -45px;
     left: -80px;
+    transform: rotate(45deg);
     -webkit-transform: rotate(45deg);
     -moz-transform: rotate(45deg);
 }
@@ -249,6 +258,7 @@ label:hover {
     position: absolute;
     top: -45px;
     right: -90px;
+    transform: rotate(45deg);
     -webkit-transform: rotate(45deg);
     -moz-transform: rotate(45deg);
 }

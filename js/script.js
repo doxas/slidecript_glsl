@@ -7,8 +7,8 @@
     var pagesCount = 0;
     var activePage = 0;
     var question = 10;
-    var barElement = null;
     var timeout = null;
+    var barElement = null;
     var shaderSource = '';
 
     window.onload = function(){
@@ -18,6 +18,9 @@
             if(a[i].nodeType === 1){pages.push(a[i]);}
         }
         pagesCount = pages.length;
+        canvas = bid('canvas');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
         barElement = bid('bar');
         window.addEventListener('keydown', keyDown, false);
         window.addEventListener('mousemove', mouseMove, false);
@@ -83,6 +86,7 @@
             }
         }
         pages[activePage].className = 'active';
+        canvas.className = 'hidden';
         barElement.className = '';
         e = bid('progress');
         e.style.width = parseInt((activePage + 1) / pagesCount * 100) + '%';
@@ -93,7 +97,7 @@
         if(e.length > 0){
             g = parseInt(pages[activePage].children[0].id.match(/\d+/)[0], 10);
             if(!isNaN(g)){
-                console.log(g, JSON.parse(e[0].textContent));
+                console.log('number: ' + g, JSON.parse(e[0].textContent));
             }
         }
 
@@ -105,10 +109,10 @@
 
         f = pages[activePage].getElementsByClassName('glsl');
         if(f.length > 0){
+            canvas.className = '';
             barElement.className = 'hidden';
             shaderSource = f[0].textContent;
-            console.log(g, f[0].textContent);
-            timeout = setTimeout(init, 500);
+            init();
         }
     }
 
@@ -159,11 +163,6 @@
             console.log('shader source not found');
             return;
         }
-        if(!canvas){
-            canvas = bid('canvas');
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
         if(!gl){
             gl = canvas.getContext('webgl');
             tPrg = gl.createProgram();
@@ -212,14 +211,21 @@
         uni.sampler = gl.getUniformLocation(prg, 'buckbuffer');
         aAttLocation = gl.getAttribLocation(prg, 'p');
 
-        run = true;
-        mousePosition = [0.0, 0.0];
-        startTime = Date.now();
-        render();
+        gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+        gl.clear(gl.COLOR_BUFFER_BIT);
+
+        timeout = setTimeout(function(){
+            console.log('render: ', shaderSource);
+            run = true;
+            mousePosition = [0.0, 0.0];
+            startTime = Date.now();
+            render();
+        }, 2000);
     }
 
     function render(){
         if(!run){return;}
+        requestAnimationFrame(render);
         nowTime = (Date.now() - startTime) * 0.001;
         gl.useProgram(prg);
         gl.bindFramebuffer(gl.FRAMEBUFFER, fFront.f);
@@ -248,7 +254,6 @@
         fTemp = fFront;
         fFront = fBack;
         fBack = fTemp;
-        requestAnimationFrame(render);
     }
 
     function shader(p, i, j){
