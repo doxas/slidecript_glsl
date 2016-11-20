@@ -179,7 +179,6 @@
             fBufferHeight = 2048;
             gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
             gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,1,0,-1,-1,0,1,1,0,1,-1,0]), gl.STATIC_DRAW);
-            gl.activeTexture(gl.TEXTURE0);
             gl.disable(gl.DEPTH_TEST);
             gl.disable(gl.CULL_FACE);
             gl.disable(gl.BLEND);
@@ -230,6 +229,7 @@
         nowTime = (Date.now() - startTime) * 0.001;
         gl.useProgram(prg);
         gl.bindFramebuffer(gl.FRAMEBUFFER, fFront.f);
+        gl.activeTexture(gl.TEXTURE0);
         gl.bindTexture(gl.TEXTURE_2D, fBack.t);
         gl.enableVertexAttribArray(aAttLocation);
         gl.vertexAttribPointer(aAttLocation, 3, gl.FLOAT, false, 0, 0);
@@ -243,12 +243,13 @@
 
         gl.useProgram(tPrg);
         gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+        gl.activeTexture(gl.TEXTURE1);
         gl.bindTexture(gl.TEXTURE_2D, fFront.t);
         gl.enableVertexAttribArray(bAttLocation);
         gl.vertexAttribPointer(bAttLocation, 3, gl.FLOAT, false, 0, 0);
         gl.clear(gl.COLOR_BUFFER_BIT);
         gl.viewport(0, 0, window.innerWidth, window.innerHeight);
-        gl.uniform1i(tUni.texture, 0);
+        gl.uniform1i(tUni.texture, 1);
         gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
 
         gl.flush();
