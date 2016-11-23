@@ -10,6 +10,7 @@
     var timeout = null;
     var barElement = null;
     var shaderSource = '';
+    var partsVisible = false;
 
     window.onload = function(){
         var a, e;
@@ -61,11 +62,15 @@
             case 76:
                 pageChange(false);
                 break;
+            case 27:
+                partsVisible = false;
+                parts(null);
+                break;
         }
     }
 
     function pageChange(prev, num){
-        var i, f, e, f, g;
+        var i, j, f, e, f, g;
         pages[activePage].className = 'page';
         run = false;
         if(num != null){
@@ -95,11 +100,23 @@
 
         e = pages[activePage].getElementsByClassName('json');
         if(e.length > 0){
+            j = JSON.parse(e[0].textContent);
             g = parseInt(pages[activePage].children[0].id.match(/\d+/)[0], 10);
             if(!isNaN(g)){
-                console.log('number: ' + g, JSON.parse(e[0].textContent));
+                f = bid('partsnumber');
+                f.textContent = paddingZero(g);
+                f = bid('partstitle').children[0];
+                f.textContent = j.title;
+                f = bid('partsauthor').children[0];
+                f.textContent = j.author;
+                f = bid('description').children[0];
+                f.textContent = j.description;
+                partsVisible = true;
             }
+        }else{
+            partsVisible = false;
         }
+        parts(partsVisible);
 
         if(timeout != null){
             clearTimeout(timeout);
@@ -113,6 +130,7 @@
             barElement.className = 'hidden';
             shaderSource = f[0].textContent;
             init();
+            return;
         }
     }
 
@@ -325,6 +343,48 @@
 
     function paddingZero(num){
         return ('0' + num).slice(-2);
+    }
+
+    function parts(visible){
+        var e = bid('description').children[0];
+        var f = bid('partsauthor').children[0];
+        var g = bid('partstitle').children[0];
+        var h = bid('partsnumber');
+        var i = bid('partscorner');
+        var j = bid('parts');
+        var s = '';
+        if(visible === null){
+            s = 'hidden';
+            j.className = 'none';
+            e.className = f.className = g.className = h.className = i.className = s;
+            partsVisible = false;
+            return;
+        }
+        if(visible === false){s = 'hidden';}
+        if(visible){
+            j.className = s;
+            setTimeout(function(){
+                i.className = s;
+                setTimeout(function(){
+                    h.className = s;
+                    setTimeout(function(){
+                        g.className = s;
+                        setTimeout(function(){
+                            f.className = s;
+                            setTimeout(function(){
+                                e.className = s;
+                            }, 200);
+                        }, 500);
+                    }, 400);
+                }, 600);
+            }, 100);
+        }else{
+            j.className = s;
+            setTimeout(function(){
+                j.className = 'none';
+                e.className = f.className = g.className = h.className = i.className = s;
+            }, 1000);
+        }
     }
 })(this);
 
