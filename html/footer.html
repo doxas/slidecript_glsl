@@ -1,4 +1,19 @@
         </div>
+        <div id="parts">
+            <div id="items">
+                <div id="partstitle">
+                    <h5>title strings</h5>
+                </div>
+                <div id="description">
+                    <p>description text description text description text description text description text description text description text</p>
+                </div>
+                <div id="partsauthor">
+                    <p>doxas</p>
+                </div>
+            </div>
+            <div id="partsnumber">00</div>
+            <div id="partslayer"></div>
+        </div>
         <div id="footer">
             <div id="arrow">
                 <div id="prev">≪</div>
@@ -14,6 +29,19 @@
             </div>
         </div>
     </div>
+    <script>
+        window.addEventListener('keydown', function(eve){
+            if(eve.keyCode === 27){
+                var e = document.getElementById('description').children[0];
+                var f = document.getElementById('partsauthor').children[0];
+                var g = document.getElementById('partstitle').children[0];
+                var h = document.getElementById('partsnumber');
+                var s = e.className;
+                if(!s){s = 'hidden';}else{s = '';}
+                e.className = f.className = g.className = h.className = s;
+            }
+        }, false);
+    </script>
 </body>
 </html>
 

@@ -267,6 +267,8 @@ label:hover {
 
 #content {
     line-height: 200%;
+
+    display: none;
 }
 
 #footer {
@@ -349,6 +351,110 @@ label:hover {
     text-shadow: 0px 0px 1px crimson;
     box-shadow: 10px 10px 10px #333;
     cursor: pointer;
+}
+
+#parts {
+    color: silver;
+    width: 100%;
+    height: 100%;
+}
+
+#parts #items {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
+#parts #partstitle {
+}
+
+#parts #partstitle h5 {
+    font-size: 64px;
+    text-align: right;
+    margin: 120px 0px;
+    padding: 120px 80px 50px;
+    opacity: 1.0;
+    transition: margin 1.0s cubic-bezier(0, 0.5, 0, 1.0), opacity 0.5s cubic-bezier(0, 0.5, 0, 1.0);
+}
+
+#parts #partstitle h5.hidden {
+    margin: 120px 50% 120px 0px;
+    opacity: 0.0;
+    transition: margin 1.0s cubic-bezier(0, 0.5, 0, 1.0), opacity 0.5s cubic-bezier(0, 0.5, 0, 1.0);
+}
+
+#parts #description {
+    margin: auto 0px 0px;
+    padding: 0px 50px;
+}
+
+#parts #description p {
+    font-size: 32px;
+    line-height: 1.5;
+    text-align: right;
+    margin: 0px 0px 0px auto;
+    padding: 0px;
+    width: 75%;
+    opacity: 1.0;
+    transition: margin 1.0s ease-out, opacity 0.8s ease-out;
+}
+
+#parts #description p.hidden {
+    margin: 0px 0px 50px auto;
+    opacity: 0.0;
+    transition: margin 1.0s ease-out, opacity 0.8s ease-out;
+}
+
+#parts #partsauthor {
+    font-size: 64px;
+    text-align: right;
+    margin: 20px 0px 120px;
+    padding: 50px;
+}
+
+#parts #partsauthor p {
+    line-height: 1;
+    margin: 0px;
+    opacity: 1.0;
+    transition: margin 1.0s cubic-bezier(0, 0.5, 0, 1.0), opacity 0.5s cubic-bezier(0, 0.5, 0, 1.0);
+}
+
+#parts #partsauthor p.hidden {
+    margin: 0px 50% 0px 0px;
+    opacity: 0.0;
+    transition: margin 1.0s cubic-bezier(0, 0.5, 0, 1.0), opacity 0.5s cubic-bezier(0, 0.5, 0, 1.0);
+}
+
+#parts #partsnumber {
+    font-size: 256px;
+    font-style: italic;
+    line-height: 360px;
+    width: 360px;
+    height: 360px;
+    position: absolute;
+    top: 0px;
+    left: 50px;
+    opacity: 1.0;
+    transition: top 1.0s ease-out, opacity 0.8s ease-out;
+}
+
+#parts #partsnumber.hidden {
+    top: -120px;
+    opacity: 0.0;
+    transition: top 1.0s ease-out, opacity 0.8s ease-out;
+}
+
+#parts #partslayer {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
 }
 
 
