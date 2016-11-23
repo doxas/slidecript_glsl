@@ -352,6 +352,7 @@
         var h = bid('partsnumber');
         var i = bid('partscorner');
         var j = bid('parts');
+        var k = bid('underline');
         var s = '';
         if(visible === null){
             s = 'hidden';
@@ -373,6 +374,9 @@
                             f.className = s;
                             setTimeout(function(){
                                 e.className = s;
+                                setTimeout(function(){
+                                    k.className = s;
+                                }, 800);
                             }, 200);
                         }, 500);
                     }, 400);
@@ -382,7 +386,7 @@
             j.className = s;
             setTimeout(function(){
                 j.className = 'none';
-                e.className = f.className = g.className = h.className = i.className = s;
+                e.className = f.className = g.className = h.className = i.className = k.className = s;
             }, 1000);
         }
     }
