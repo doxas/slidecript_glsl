@@ -368,7 +368,7 @@ label:hover {
 
 #parts.hidden {
     opacity: 0.0;
-    transition: opacity 0.5s cubic-bezier(0, 0.5, 0, 1.0);
+    transition: opacity 1.0s cubic-bezier(0, 0.5, 0, 1.0);
 }
 
 #parts #items {
