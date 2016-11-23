@@ -374,16 +374,17 @@ label:hover {
 }
 
 #parts #partstitle h5 {
-    font-size: 64px;
+    color: whitesmoke;
+    font-size: 72px;
     text-align: right;
-    margin: 120px 0px;
+    margin: 150px 0px;
     padding: 120px 80px 50px;
     opacity: 1.0;
     transition: margin 1.0s cubic-bezier(0, 0.5, 0, 1.0), opacity 0.5s cubic-bezier(0, 0.5, 0, 1.0);
 }
 
 #parts #partstitle h5.hidden {
-    margin: 120px 50% 120px 0px;
+    margin: 150px 50% 120px 0px;
     opacity: 0.0;
     transition: margin 1.0s cubic-bezier(0, 0.5, 0, 1.0), opacity 0.5s cubic-bezier(0, 0.5, 0, 1.0);
 }
@@ -411,6 +412,8 @@ label:hover {
 }
 
 #parts #partsauthor {
+    color: whitesmoke;
+    font-weight: bold;
     font-size: 64px;
     text-align: right;
     margin: 20px 0px 120px;
@@ -431,14 +434,19 @@ label:hover {
 }
 
 #parts #partsnumber {
-    font-size: 256px;
+    color: deeppink;
+    font-size: 320px;
     font-style: italic;
+    font-weight: bold;
     line-height: 360px;
-    width: 360px;
-    height: 360px;
+    text-shadow: 15px 10px 1px white;
+    margin: 0px;
+    padding: 0px 50px;
+    width: 800px;
+    height: 100%;
     position: absolute;
     top: 0px;
-    left: 50px;
+    left: 0px;
     opacity: 1.0;
     transition: top 1.0s ease-out, opacity 0.8s ease-out;
 }
@@ -449,6 +457,23 @@ label:hover {
     transition: top 1.0s ease-out, opacity 0.8s ease-out;
 }
 
+#parts #partscorner {
+    background-color: deeppink;
+    width: 5000px;
+    height: 600px;
+    display: inline-block;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    transform: rotate(-45deg) translate(1600px,-1700px);
+    transition: transform 1.0s ease;
+}
+
+#parts #partscorner.hidden {
+    transform: rotate(-45deg) translate(-5000px,-1700px);
+    transition: transform 1.0s ease;
+}
+
 #parts #partslayer {
     width: 100%;
     height: 100%;
@@ -456,6 +481,4 @@ label:hover {
     top: 0px;
     left: 0px;
 }
-
-
 

@@ -12,6 +12,7 @@
                 </div>
             </div>
             <div id="partsnumber">00</div>
+            <div id="partscorner"></div>
             <div id="partslayer"></div>
         </div>
         <div id="footer">
@@ -36,9 +37,23 @@
                 var f = document.getElementById('partsauthor').children[0];
                 var g = document.getElementById('partstitle').children[0];
                 var h = document.getElementById('partsnumber');
-                var s = e.className;
+                var i = document.getElementById('partscorner');
+                var s = i.className;
                 if(!s){s = 'hidden';}else{s = '';}
-                e.className = f.className = g.className = h.className = s;
+                // e.className = f.className = g.className = h.className = i.className = s;
+                i.className = s;
+                setTimeout(function(){
+                    h.className = s;
+                    setTimeout(function(){
+                        g.className = s;
+                        setTimeout(function(){
+                            f.className = s;
+                            setTimeout(function(){
+                                e.className = s;
+                            }, 200);
+                        }, 500);
+                    }, 400);
+                }, 600);
             }
         }, false);
     </script>
