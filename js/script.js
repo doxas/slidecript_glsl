@@ -11,6 +11,7 @@
     var barElement = null;
     var shaderSource = '';
     var partsVisible = false;
+    var listeners = [];
 
     window.onload = function(){
         var a, e;
@@ -354,40 +355,32 @@
         var j = bid('parts');
         var k = bid('underline');
         var s = '';
+        listeners.map(function(v){
+            clearTimeout(v);
+        });
+        listeners = [];
         if(visible === null){
             s = 'hidden';
             j.className = 'none';
-            e.className = f.className = g.className = h.className = i.className = s;
+            e.className = f.className = g.className = h.className = i.className = k.className = s;
             partsVisible = false;
             return;
         }
         if(visible === false){s = 'hidden';}
         if(visible){
             j.className = s;
-            setTimeout(function(){
-                i.className = s;
-                setTimeout(function(){
-                    h.className = s;
-                    setTimeout(function(){
-                        g.className = s;
-                        setTimeout(function(){
-                            f.className = s;
-                            setTimeout(function(){
-                                e.className = s;
-                                setTimeout(function(){
-                                    k.className = s;
-                                }, 800);
-                            }, 200);
-                        }, 500);
-                    }, 400);
-                }, 600);
-            }, 100);
+            listeners.push(setTimeout(function(){i.className = s;},  100));
+            listeners.push(setTimeout(function(){h.className = s;},  700));
+            listeners.push(setTimeout(function(){g.className = s;}, 1100));
+            listeners.push(setTimeout(function(){f.className = s;}, 1600));
+            listeners.push(setTimeout(function(){e.className = s;}, 1800));
+            listeners.push(setTimeout(function(){k.className = s;}, 2500));
         }else{
             j.className = s;
-            setTimeout(function(){
+            listeners.push(setTimeout(function(){
                 j.className = 'none';
                 e.className = f.className = g.className = h.className = i.className = k.className = s;
-            }, 1000);
+            }, 1000));
         }
     }
 })(this);
