@@ -21,9 +21,9 @@ paragraparagraparagraparagra**iparag**rapppppparagraph
 
 @@@
 {
-    "title": "test title",
+    "title": "arctangent demo",
     "author": "doxas",
-    "description": "description text"
+    "description": "arctangent distorsion."
 }
 @@@
 
@@ -60,18 +60,15 @@ void main(){
 
 @@@
 {
-    "title": "test title",
-    "author": "doxas",
-    "description": "description text"
+    "title": "glslsandbox default",
+    "author": "mr.doob",
+    "description": "in the page of new shader."
 }
 @@@
 
 ---
 
 |||
-// writen by qmuntada Based on this shader : https://www.shadertoy.com/view/ltXSDN
-// modified a lor by gigatron for glslsandbox !
-// 
 #ifdef GL_ES
 precision mediump float;
 #endif
@@ -81,43 +78,19 @@ precision mediump float;
 uniform float time;
 uniform vec2 mouse;
 uniform vec2 resolution;
-uniform sampler2D backbuffer;
 
-#define	SPEED 	    0.1
-#define	STAR_NUMBER 100
+void main( void ) {
 
-vec3 col1 = vec3(155., 176., 255.) / 256.; 
-vec3 col2 = vec3(255., 111., 111.) / 256.; 
+	vec2 position = ( gl_FragCoord.xy / resolution.xy ) + mouse / 4.0;
 
-float rand(float i){
-    return fract(sin(dot(vec2(i) ,vec2(32.9898,78.233))) * 43758.5453);
-}
+	float color = 0.0;
+	color += sin( position.x * cos( time / 15.0 ) * 80.0 ) + cos( position.y * cos( time / 15.0 ) * 10.0 );
+	color += sin( position.y * sin( time / 10.0 ) * 40.0 ) + cos( position.x * sin( time / 25.0 ) * 40.0 );
+	color += sin( position.x * sin( time / 5.0 ) * 10.0 ) + sin( position.y * sin( time / 35.0 ) * 80.0 );
+	color *= sin( time / 10.0 ) * 0.5;
 
-void main(){
-    vec4 b=texture2D(backbuffer,gl_FragCoord.xy/resolution.xy);
+	gl_FragColor = vec4( vec3( color, color * 0.5, sin( color + time / 3.0 ) * 0.75 ), 1.0 );
 
-    vec2 uv = gl_FragCoord.xy / resolution.y;
-    float res  = resolution.x / resolution.y;
-    gl_FragColor = vec4(0.0);
-
-    vec4 sStar = vec4(rand(uv.x + uv.y));
-    sStar *= pow(rand(uv.x * uv.y), 800.);
-    gl_FragColor += sStar;
-  
-    vec4 col = vec4(0.);
-
-    for (int i = 0; i < STAR_NUMBER; ++i){
-    	float n = float(i);
-
-        vec3 pos = vec3(rand(n) + res + time * SPEED, rand(n + 1.) , rand(n + 2.));
-
-        pos.x = mod(pos.x * pos.z, res);
-        vec4 col = .2*vec4(pow(length(pos.xy - uv), -2.0) * 0.005 * pos.z * rand(n + 3.));
-
-        col.xyz *= mix(col1, col2, rand(n + 4.));
-            
-       gl_FragColor += vec4(col);
-    }
 }
 |||
 
