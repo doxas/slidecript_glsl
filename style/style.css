@@ -393,12 +393,14 @@ label:hover {
     text-align: right;
     margin: 150px 0px 0px 550px;
     padding: 60px 50px 10px;
+    height: 96px;
+    overflow: hidden;
     opacity: 1.0;
     transition: margin 1.0s cubic-bezier(0, 0.5, 0, 1.0), opacity 0.5s cubic-bezier(0, 0.5, 0, 1.0);
 }
 
 #parts #partstitle h5.hidden {
-    margin: 150px 50% 0px 550px;
+    margin: 150px 10% 0px 550px;
     opacity: 0.0;
     transition: margin 0.1s cubic-bezier(0, 0.5, 0, 1.0), opacity 0.1s cubic-bezier(0, 0.5, 0, 1.0);
 }

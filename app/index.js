@@ -17,6 +17,7 @@ module.exports = {
         }
         if(source.length === 0){return null;}
         dest = [];
+        demo = 0;
         for(i = 0, j = source.length; i < j; i++){
             while(source[i].match(/`[^`]+`/)){
                 source[i] = source[i].replace(/`/, '<code>');
@@ -55,8 +56,7 @@ module.exports = {
                         content = source[i].replace(/^#{1,6} /, '');
                         attribute = '';
                         if(source[i].match(/^#{1,6} \d{1,3}/)){
-                            l = source[i].match(/\d+/)[0];
-                            demo = parseInt(l, 10);
+                            ++demo;
                             attribute = ' class="displaynone" id="demo_' + demo + '"';
                         }
                         dest[i] = '\t<' + tag + attribute + '>' + content + '</' + tag + '>\n';
