@@ -23,7 +23,7 @@ paragraparagraparagraparagra**iparag**rapppppparagraph
 {
     "title": "arctangent demo",
     "author": "doxas",
-    "description": "arctangent distorsion."
+    "description": "arctangent distortion."
 }
 @@@
 
