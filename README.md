@@ -10,10 +10,10 @@ presentation text and glsl shader
 * h2 : トップタイトル
 * h3 : トップサブタイトル
 * h4 : 見出し
-* h5 : 非表示見出し（id が自動で付加される）
-* h6 : 空き
+* h4 : 見出し + 数字三桁以内（連番対象として処理される）
 * `@@@` : json
 * `|||` : glsl
+
 
 ### json
 
@@ -28,5 +28,8 @@ presentation text and glsl shader
 ### glsl
 
 fragment shader only
+
+（glslsandbox 互換）
+
 
 
