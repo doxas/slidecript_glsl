@@ -12,11 +12,13 @@
     var shaderSource = '';
     var partsVisible = false;
     var listeners = [];
+    var questionCount = 4;
 
     window.onload = function(){
         var a, e;
+        var i, j, k, l;
         a = bid('content').childNodes;
-        for(var i = 0, len = a.length; i < len; i++){
+        for(i = 0, len = a.length; i < len; i++){
             if(a[i].nodeType === 1){pages.push(a[i]);}
         }
         pagesCount = pages.length;
@@ -38,11 +40,10 @@
         e.addEventListener('click', function(){answer();}, false);
 
         // input label setting
-        var questionCount = 4;
-        for(var i = 0; i < question; i++){
-            var j = paddingZero(i + 1);
-            for(var k = 0; k < questionCount; k++){
-                var l = paddingZero(k + 1);
+        for(i = 0; i < question; i++){
+            j = paddingZero(i + 1);
+            for(k = 0; k < questionCount; k++){
+                l = paddingZero(k + 1);
                 e = bid('radio' + j + '_' + l);
                 if(e){e.addEventListener('change', function(eve){eve.currentTarget.blur();}, true);}
             }
@@ -71,7 +72,7 @@
     }
 
     function pageChange(prev, num){
-        var i, j, f, e, f, g;
+        var i, j, e, f, g;
         pages[activePage].className = 'page';
         run = false;
         if(num != null){
@@ -111,7 +112,7 @@
                 f = bid('partsauthor').children[0];
                 f.textContent = j.author;
                 f = bid('description').children[0];
-                f.textContent = j.description;
+                f.innerHTML = j.description.replace(/\n/g, '<br>');
                 partsVisible = true;
             }
         }else{
@@ -194,8 +195,8 @@
             tUni.texture = gl.getUniformLocation(tPrg, 'texture');
             bAttLocation = gl.getAttribLocation(tPrg, 'position');
             fFront = fBack = fTemp = null;
-            fBufferWidth = 2048;
-            fBufferHeight = 2048;
+            fBufferWidth = window.innerWidth;
+            fBufferHeight = window.innerHeight;
             gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
             gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,1,0,-1,-1,0,1,1,0,1,-1,0]), gl.STATIC_DRAW);
             gl.disable(gl.DEPTH_TEST);
@@ -232,6 +233,7 @@
 
         gl.bindFramebuffer(gl.FRAMEBUFFER, null);
         gl.clear(gl.COLOR_BUFFER_BIT);
+        gl.viewport(0, 0, fBufferWidth, fBufferHeight);
 
         timeout = setTimeout(function(){
             console.log('render: ', shaderSource);
@@ -253,7 +255,6 @@
         gl.enableVertexAttribArray(aAttLocation);
         gl.vertexAttribPointer(aAttLocation, 3, gl.FLOAT, false, 0, 0);
         gl.clear(gl.COLOR_BUFFER_BIT);
-        gl.viewport(0, 0, fBufferWidth, fBufferHeight);
         gl.uniform2fv(uni.mouse, mousePosition);
         gl.uniform1f(uni.time, nowTime);
         gl.uniform2fv(uni.resolution, [fBufferWidth, fBufferHeight]);
@@ -267,7 +268,6 @@
         gl.enableVertexAttribArray(bAttLocation);
         gl.vertexAttribPointer(bAttLocation, 3, gl.FLOAT, false, 0, 0);
         gl.clear(gl.COLOR_BUFFER_BIT);
-        gl.viewport(0, 0, window.innerWidth, window.innerHeight);
         gl.uniform1i(tUni.texture, 1);
         gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
 
